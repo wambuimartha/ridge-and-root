@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@theme inline {
+  /* Brand fonts: Libre Baskerville (serif headings) + DM Sans (body copy) */
+  --font-serif: var(--font-baskerville);
+  --font-sans: var(--font-dm-sans);
+
+  /* Core Brand Palette — Exact Ridge & Root specification */
+  --color-cream: #fbf1e5;
+  --color-navy-teal: #1F393F;
+  --color-brown-dark: #3F2D20;
+  --color-gold: #CC9858;
+  --color-gold-light: #F4D494;
+
+  /* Secondary Palette (flavor-specific accents, never as primary UI) */
+  --color-maroon: #6D0D0D;
+  --color-teal: #10828E;
+  --color-teal-dark: #1F393F;
+  --color-brown: #3F2D20;
+  --color-rust: #AA471B;
+  --color-plum: #680F3E;
+  --color-amber: #663612;
+
+  /* Accent Palette (flavor differentiation / small highlights only) */
+  --color-accent-red-orange: #D63E25;
+  --color-accent-aqua: #85E8E3;
+  --color-accent-tan: #BA793E;
+  --color-accent-peach: #F99C5D;
+  --color-accent-teal-mid: #51A6AF;
+  --color-accent-pink: #E281BE;
+  --color-accent-yellow: #EFD259;
+
+  /* Utility brand aliases — mapped to core palette */
+  --color-teal-news: #1F393F;
+  --color-carousel: #592D27;
+  --color-ink: #3F2D20;
+
+  /* Base UI / shadcn tokens mapped to exact light brand palette */
+  --color-background: #FFF0D7;
+  --color-foreground: #3F2D20;
+  --color-card: #FFF0D7;
+  --color-card-foreground: #3F2D20;
+  --color-popover: #FFF0D7;
+  --color-popover-foreground: #3F2D20;
+  --color-primary: #1F393F;
+  --color-primary-foreground: #FFF0D7;
+  --color-secondary: #FFF0D7;
+  --color-secondary-foreground: #3F2D20;
+  --color-muted: #FFF0D7;
+  --color-muted-foreground: #3F2D20;
+  --color-accent: #CC9858;
+  --color-accent-foreground: #3F2D20;
+  --color-destructive: #6D0D0D;
+  --color-border: rgba(63, 45, 32, 0.15);
+  --color-input: rgba(63, 45, 32, 0.2);
+  --color-ring: #CC9858;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  color-scheme: light;
+
+  /* CSS Variables for Ridge & Root Brand Guide */
+  --rr-cream: #FFF0D7;
+  --rr-navy-teal: #1F393F;
+  --rr-brown-dark: #3F2D20;
+  --rr-gold: #CC9858;
+  --rr-gold-light: #F4D494;
+  --rr-maroon: #6D0D0D;
+  --rr-teal: #10828E;
+  --rr-rust: #AA471B;
+  --rr-plum: #680F3E;
+  --rr-brown: #663612;
+  --rr-accent-red-orange: #D63E25;
+  --rr-accent-aqua: #85E8E3;
+  --rr-accent-tan: #BA793E;
+  --rr-accent-peach: #F99C5D;
+  --rr-accent-teal-mid: #51A6AF;
+  --rr-accent-pink: #E281BE;
+  --rr-accent-yellow: #EFD259;
+
+  --background: #FFF0D7;
+  --foreground: #3F2D20;
+  --card: #FFF0D7;
+  --card-foreground: #3F2D20;
+  --popover: #FFF0D7;
+  --popover-foreground: #3F2D20;
+  --primary: #1F393F;
+  --primary-foreground: #FFF0D7;
+  --secondary: #FFF0D7;
+  --secondary-foreground: #3F2D20;
+  --muted: #FFF0D7;
+  --muted-foreground: #3F2D20;
+  --accent: #CC9858;
+  --accent-foreground: #3F2D20;
+  --destructive: #6D0D0D;
+  --border: rgba(63, 45, 32, 0.15);
+  --input: rgba(63, 45, 32, 0.2);
+  --ring: #CC9858;
+  --radius: 0.625rem;
+}
+
+html {
+  color-scheme: light !important;
+  background-color: #FFF0D7 !important;
+  -webkit-tap-highlight-color: rgba(204, 152, 88, 0.25);
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  color-scheme: light !important;
+  background-color: #FFF0D7 !important;
+  color: #3F2D20 !important;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+::selection {
+  background-color: #CC9858;
+  color: #3F2D20;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: rgba(204, 152, 88, 0.25);
+  }
+  *:focus-visible {
+    outline: 2px solid #CC9858 !important;
+    outline-offset: 2px;
+  }
+  body {
+    @apply bg-cream text-ink;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #1F393F;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    accent-color: #CC9858;
+  }
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid #CC9858 !important;
+    outline-offset: 1px;
+    border-color: #CC9858 !important;
+  }
+  a {
+    color: inherit;
+  }
+  a:focus-visible {
+    outline: 2px solid #CC9858 !important;
+    outline-offset: 2px;
+  }
+}
