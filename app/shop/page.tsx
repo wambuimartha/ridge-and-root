@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { WaysToEnjoy } from '@/components/site/ways-to-enjoy'
@@ -42,11 +43,14 @@ export default async function ShopPage(props: {
       <Header />
 
       {/* Hero */}
-      <section className="relative">
-        <img
+      <section className="relative h-[52vh] min-h-[380px] w-full overflow-hidden">
+        <Image
           src="/images/shop_hero.png"
           alt="An assortment of roasted macadamia nuts and seasonings on a cream surface"
-          className="h-[52vh] min-h-[380px] w-full object-cover object-top sm:object-center"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top sm:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
         <div className="absolute inset-0 flex items-center">

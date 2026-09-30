@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import { shopCards } from '@/lib/products'
 import { formatCurrencyPrice, type Currency } from '@/lib/currency'
@@ -253,10 +254,12 @@ export function ShopGrid({ currency = 'USD' }: { currency?: Currency }) {
                   href={`/shop/${card.product.slug}`}
                   className="relative flex h-80 sm:h-[360px] md:h-[400px] w-full items-center justify-center overflow-hidden rounded-xl bg-cream/70"
                 >
-                  <img
+                  <Image
                     src={card.product.image || '/placeholder.svg'}
                     alt={`${card.product.name} dry roasted macadamia nuts pouch`}
-                    className="h-full w-full object-contain scale-[1.82] sm:scale-[1.9] -translate-x-[5%] transition-transform duration-300 ease-in-out group-hover:scale-[1.96]"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain scale-[1.82] sm:scale-[1.9] -translate-x-[5%] transition-transform duration-300 ease-in-out group-hover:scale-[1.96]"
                   />
                 </Link>
 

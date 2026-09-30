@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export function Wellness() {
   return (
     <section className="relative bg-gold">
@@ -15,28 +17,37 @@ export function Wellness() {
             <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5">
               {/* Card 1: Green Macadamia Branch */}
               <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                <img
+                <Image
                   src="/images/wellness_card_branch.png"
                   alt="Macadamia tree branch with lush leaves and clusters of green nuts"
-                  className="aspect-[177/262] w-full object-cover"
+                  width={177}
+                  height={262}
+                  sizes="(max-width: 768px) 33vw, 20vw"
+                  className="aspect-[177/262] w-full h-auto object-cover"
                 />
               </div>
 
               {/* Card 2: Farmer with Harvesting Basket */}
               <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                <img
+                <Image
                   src="/images/wellness_card_farmer.png"
                   alt="Farmer harvesting macadamias with a woven basket on her back"
-                  className="aspect-[177/262] w-full object-cover"
+                  width={178}
+                  height={262}
+                  sizes="(max-width: 768px) 33vw, 20vw"
+                  className="aspect-[177/262] w-full h-auto object-cover"
                 />
               </div>
 
               {/* Card 3: Roasted & Cracked Macadamia Nuts */}
               <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                <img
+                <Image
                   src="/images/wellness_card_cracked.png"
                   alt="Cracked macadamia nut shells with whole golden kernels"
-                  className="aspect-[177/262] w-full object-cover"
+                  width={174}
+                  height={262}
+                  sizes="(max-width: 768px) 33vw, 20vw"
+                  className="aspect-[177/262] w-full h-auto object-cover"
                 />
               </div>
             </div>

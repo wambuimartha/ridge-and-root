@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Newsletter } from '@/components/site/newsletter'
@@ -62,11 +63,14 @@ export default function ContactPage() {
       <Header />
 
       {/* Hero */}
-      <section className="relative">
-        <img
+      <section className="relative h-[56vh] min-h-[400px] w-full overflow-hidden">
+        <Image
           src="/images/contact_hero_mountain.png"
           alt="Misty Kenyan highland mountains at golden light"
-          className="h-[56vh] min-h-[400px] w-full object-cover object-top sm:object-center"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top sm:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
         <div className="absolute inset-0 flex items-center">

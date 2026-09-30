@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Star, Minus, Plus } from 'lucide-react'
 import { products, buildWhatsAppEnquiry, MULTIPACKS, PREMIUM_KSH_SLUGS, type Product } from '@/lib/products'
 import { WhatsAppButton } from '@/components/site/buttons'
@@ -129,10 +130,12 @@ export function ProductDetail({
           <div className="min-w-0">
             {/* Main image container — stable, consistent height across slides so switching between front and back never causes layout jumps */}
             <div className="relative flex h-[340px] sm:h-[420px] md:h-[460px] w-full items-center justify-center overflow-hidden rounded-2xl border border-gold/15 bg-cream">
-              <img
+              <Image
                 src={gallery[mainImg].src || '/placeholder.svg'}
                 alt={gallery[mainImg].alt}
-                className={`h-full w-full transition-transform duration-200 ease-in-out ${
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={`transition-transform duration-200 ease-in-out ${
                   mainImg === 0 || mainImg === 1
                     ? 'object-contain scale-[1.2] sm:scale-[1.24]'
                     : mainImg === 4
@@ -158,14 +161,16 @@ export function ProductDetail({
                     key={i}
                     type="button"
                     onClick={() => setMainImg(i)}
-                    className={`flex h-14 sm:h-20 flex-1 min-w-[48px] items-center justify-center overflow-hidden rounded-lg border bg-cream transition-all duration-150 ${
+                    className={`relative flex h-14 sm:h-20 flex-1 min-w-[48px] items-center justify-center overflow-hidden rounded-lg border bg-cream transition-all duration-150 ${
                       mainImg === i ? 'border-gold ring-1 ring-gold shadow-sm' : 'border-ink/15 hover:border-gold/50'
                     }`}
                   >
-                    <img
+                    <Image
                       src={item.src || '/placeholder.svg'}
                       alt={item.alt}
-                      className={`h-full w-full ${
+                      fill
+                      sizes="80px"
+                      className={`${
                         i === 4
                           ? 'object-cover object-[70%_center]'
                           : 'object-contain p-1'
@@ -300,11 +305,13 @@ export function ProductDetail({
         </div>
 
         {/* Secondary lifestyle image — flavor-matched tote */}
-        <div className="mt-16">
-          <img
+        <div className="relative mt-16 h-[300px] md:h-[420px] w-full overflow-hidden">
+          <Image
             src={toteImageForSlug(product.slug)}
             alt={`A hand holding a ${product.name} Ridge & Root macadamia pouch over a canvas tote bag`}
-            className="h-[300px] w-full object-cover object-[70%_35%] md:h-[420px] md:object-[70%_center]"
+            fill
+            sizes="100vw"
+            className="object-cover object-[70%_35%] md:object-[70%_center]"
           />
         </div>
 
@@ -559,11 +566,13 @@ export function ProductDetail({
                       className="rounded-2xl border border-gold/25 bg-gradient-to-br from-cream via-[#FDF3E3] to-cream shadow-sm overflow-hidden"
                     >
                       {/* Image */}
-                      <div className="h-48 sm:h-56 w-full overflow-hidden bg-cream/70">
-                        <img
+                      <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-cream/70">
+                        <Image
                           src={bundleImage}
                           alt={bundle.name}
-                          className="h-full w-full object-cover object-center"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover object-center"
                         />
                       </div>
 
@@ -603,11 +612,13 @@ export function ProductDetail({
 
                 {/* Corporate Gifting card */}
                 <div className="rounded-2xl border border-gold/25 bg-gradient-to-br from-cream via-[#FDF3E3] to-cream shadow-sm overflow-hidden">
-                  <div className="h-48 sm:h-56 w-full overflow-hidden bg-cream/70">
-                    <img
+                  <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-cream/70">
+                    <Image
                       src="/images/corporate_gift.png"
                       alt="Custom Corporate Gifting"
-                      className="h-full w-full object-cover object-center"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center"
                     />
                   </div>
                   <div className="p-5 sm:p-6">
@@ -656,11 +667,13 @@ export function ProductDetail({
                   href={`/shop/${p.slug}`}
                   className="group flex flex-col items-center text-center rounded-2xl border border-gold/20 bg-cream p-4 sm:p-5 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-gold/40 hover:bg-cream hover:shadow-[0_12px_28px_rgba(31,57,63,0.08)]"
                 >
-                  <div className="flex h-64 sm:h-72 w-full items-center justify-center overflow-hidden rounded-xl bg-cream/70 p-2">
-                    <img
+                  <div className="relative flex h-64 sm:h-72 w-full items-center justify-center overflow-hidden rounded-xl bg-cream/70 p-2">
+                    <Image
                       src={p.image || '/placeholder.svg'}
                       alt={`${p.name} pouch`}
-                      className="h-full w-full object-contain scale-[1.18] sm:scale-[1.22] transition-transform duration-300 ease-in-out group-hover:scale-[1.28]"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 33vw"
+                      className="object-contain scale-[1.18] sm:scale-[1.22] transition-transform duration-300 ease-in-out group-hover:scale-[1.28]"
                     />
                   </div>
                   <p className="mt-4 font-serif text-lg sm:text-xl text-ink transition-colors duration-200 group-hover:text-gold">{p.name}</p>

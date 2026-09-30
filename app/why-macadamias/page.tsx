@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { GoldRibbon } from '@/components/site/gold-ribbon'
@@ -64,11 +65,14 @@ export default function WhyMacadamiasPage() {
       <Header />
 
       {/* ---------- HERO ---------- */}
-      <section className="relative">
-        <img
+      <section className="relative h-[55vh] sm:h-[65vh] min-h-[420px] sm:min-h-[480px] w-full overflow-hidden">
+        <Image
           src="/images/why-macadamias/hero-macadamias.png"
           alt="Bowl of macadamia nuts with cracked shells and fresh leaves"
-          className="h-[55vh] sm:h-[65vh] min-h-[420px] sm:min-h-[480px] w-full object-cover object-[center_35%] sm:object-center"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[center_35%] sm:object-center"
         />
         {/* Dark gradient overlay behind text for crisp legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/25 sm:from-black/75 sm:via-black/45 sm:to-transparent" />
@@ -168,28 +172,37 @@ export default function WhyMacadamiasPage() {
               <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5">
                 {/* Card 1: Green Macadamia Branch */}
                 <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                  <img
+                  <Image
                     src="/images/wellness_card_branch.png"
                     alt="Macadamia tree branch with lush leaves and clusters of green nuts"
-                    className="aspect-[177/262] w-full object-cover"
+                    width={177}
+                    height={262}
+                    sizes="(max-width: 768px) 33vw, 20vw"
+                    className="aspect-[177/262] w-full h-auto object-cover"
                   />
                 </div>
 
                 {/* Card 2: Farmer with Harvesting Basket */}
                 <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                  <img
+                  <Image
                     src="/images/wellness_card_farmer.png"
                     alt="Farmer harvesting macadamias with a woven basket on her back"
-                    className="aspect-[177/262] w-full object-cover"
+                    width={178}
+                    height={262}
+                    sizes="(max-width: 768px) 33vw, 20vw"
+                    className="aspect-[177/262] w-full h-auto object-cover"
                   />
                 </div>
 
                 {/* Card 3: Roasted & Cracked Macadamia Nuts */}
                 <div className="overflow-hidden rounded-sm shadow-[0_10px_24px_rgba(43,33,24,0.22)] transition-transform duration-300 hover:-translate-y-1">
-                  <img
+                  <Image
                     src="/images/wellness_card_cracked.png"
                     alt="Cracked macadamia nut shells with whole golden kernels"
-                    className="aspect-[177/262] w-full object-cover"
+                    width={174}
+                    height={262}
+                    sizes="(max-width: 768px) 33vw, 20vw"
+                    className="aspect-[177/262] w-full h-auto object-cover"
                   />
                 </div>
               </div>

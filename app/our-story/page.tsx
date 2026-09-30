@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Newsletter } from '@/components/site/newsletter'
@@ -46,11 +47,14 @@ export default function OurStoryPage() {
       <Header />
 
       {/* Hero */}
-      <section className="relative">
-        <img
+      <section className="relative h-[55vh] sm:h-[62vh] min-h-[360px] sm:min-h-[420px] w-full overflow-hidden">
+        <Image
           src="/images/ourstory_hero_mountain.png"
           alt="The Kenyan highlands with macadamia orchards at golden hour"
-          className="h-[55vh] sm:h-[62vh] min-h-[360px] sm:min-h-[420px] w-full object-cover object-top sm:object-center"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top sm:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
         <div className="absolute inset-0 flex items-center">
@@ -138,11 +142,12 @@ export default function OurStoryPage() {
             and perfectly matched to the text column on desktop. */}
         <div className="order-first flex flex-col bg-cream md:order-last md:h-full md:min-h-0">
           <div className="relative w-full overflow-hidden h-[180px] sm:h-[220px] md:h-full md:flex-1 md:min-h-0 flex flex-col">
-            <img
+            <Image
               src="/images/ourstory_founders_photo.png"
               alt="Jane Maigua and Charity Ndegwa, the two founders of Ridge & Root, standing under an arched alcove framed by macadamia branches"
-              className="w-full h-full object-cover object-[75%_22%] [clip-path:inset(0_0_3px_0)]"
-              style={{ display: 'block' }}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-[75%_22%] [clip-path:inset(0_0_3px_0)]"
             />
           </div>
           <div className="flex shrink-0 items-center justify-center gap-3 bg-cream px-4 sm:px-6 py-2.5 sm:py-3.5">
@@ -169,11 +174,13 @@ export default function OurStoryPage() {
       </section>
 
       {/* Macadamia Trees Grove Photo */}
-      <div className="relative w-full overflow-hidden">
-        <img
+      <div className="relative w-full overflow-hidden h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px]">
+        <Image
           src="/images/ourstory_macadamia_trees.jpg"
           alt="Lush macadamia trees and green foliage in the Kenyan highlands"
-          className="h-[320px] sm:h-[400px] md:h-[480px] lg:h-[540px] w-full object-cover object-[center_35%]"
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_35%]"
         />
       </div>
 
@@ -213,11 +220,15 @@ export default function OurStoryPage() {
       </section>
 
       {/* Farm photo */}
-      <img
-        src="/images/factory_photo.jpg"
-        alt="A factory photo showing macadamia nuts being processed and roasted in Kenya"
-        className="h-[340px] w-full object-cover md:h-[460px]"
-      />
+      <div className="relative w-full overflow-hidden h-[340px] md:h-[460px]">
+        <Image
+          src="/images/factory_photo.jpg"
+          alt="A factory photo showing macadamia nuts being processed and roasted in Kenya"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
 
 
       {/* Newsletter */}

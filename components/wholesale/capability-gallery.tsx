@@ -21,7 +21,6 @@ export function CapabilityGallery() {
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 100vw, 66vw"
-              priority
             />
             {/* Subtle gradient vignette at the bottom for legibility of the stat card */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Search, Menu, X, ChevronRight } from 'lucide-react'
@@ -25,15 +26,17 @@ function Logo({
   variant = 'dark',
   className = '',
   imgClassName = '',
+  priority = false,
 }: {
   variant?: 'dark' | 'light'
   className?: string
   imgClassName?: string
+  priority?: boolean
 }) {
   const src =
     variant === 'light'
-      ? '/RidgeRoot_Header_Wordmark_Cream.png'
-      : '/RidgeRoot_Header_Wordmark_Burgundy.png'
+      ? '/RidgeRoot_Header_Wordmark_Cream-v2.png'
+      : '/RidgeRoot_Header_Wordmark_Burgundy-v2.png'
 
   return (
     <Link
@@ -41,9 +44,13 @@ function Logo({
       className={`inline-flex max-w-full items-center justify-center transition-opacity duration-200 hover:opacity-85 ${className}`}
       aria-label="Ridge & Root home"
     >
-      <img
+      <Image
         src={src}
         alt="Ridge & Root"
+        width={980}
+        height={113}
+        priority={priority}
+        sizes="(max-width: 640px) 240px, (max-width: 768px) 350px, (max-width: 1024px) 420px, 490px"
         className={
           imgClassName ||
           'h-7 min-[380px]:h-8 sm:h-10 md:h-12 lg:h-14 w-auto max-w-full object-contain'
@@ -193,7 +200,7 @@ export function Header() {
 
           {/* Logo + nav centered — takes full central width on desktop */}
           <div className="flex flex-1 min-w-0 flex-col items-center justify-center">
-            <Logo variant="dark" />
+            <Logo variant="dark" priority />
             <nav className="mt-2.5 hidden w-full md:block">
               <ul className="flex items-center justify-center gap-5 sm:gap-6 md:gap-7 lg:gap-8 flex-nowrap">
                 {NAV.map((item) => {
@@ -260,10 +267,13 @@ export function Header() {
 
         {/* Header row: logo + close */}
         <div className="relative z-10 flex items-center justify-between border-b border-cream/15 px-6 py-4">
-          <Logo
-            variant="light"
-            imgClassName="h-7 min-[360px]:h-8 w-auto object-contain max-w-[200px] min-[360px]:max-w-[230px]"
-          />
+          {open && (
+            <Logo
+              variant="light"
+              priority
+              imgClassName="h-7 min-[360px]:h-8 w-auto object-contain max-w-[200px] min-[360px]:max-w-[230px]"
+            />
+          )}
           <button
             type="button"
             aria-label="Close menu"

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { products } from '@/lib/products'
 import { PillLink } from '@/components/site/buttons'
@@ -181,12 +182,14 @@ export function ProductCarousel() {
                   className="h-full w-full shrink-0 flex items-center justify-center px-2 sm:px-4"
                   aria-hidden={index !== i}
                 >
-                  <div className="flex h-full w-full max-w-2xl items-center justify-center overflow-hidden">
-                    <img
+                  <div className="relative flex h-full w-full max-w-2xl items-center justify-center overflow-hidden">
+                    <Image
                       src={s.image || '/placeholder.svg'}
                       alt={s.alt}
+                      fill
+                      sizes="(max-width: 768px) 90vw, 700px"
                       draggable={false}
-                      className={`h-full w-full pointer-events-none select-none transition-transform duration-300 ${
+                      className={`pointer-events-none select-none transition-transform duration-300 ${
                         s.isGroup
                           ? 'object-contain max-h-[88%]'
                           : 'object-contain max-h-[95%] scale-105 sm:scale-110'

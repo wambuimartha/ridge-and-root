@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Newsletter } from '@/components/site/newsletter'
@@ -103,11 +104,13 @@ export default async function GiftPacksPage() {
                   className="flex flex-col rounded-2xl border border-gold/20 bg-cream shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gold/40 hover:shadow-lg overflow-hidden"
                 >
                   {/* Image */}
-                  <div className="h-56 sm:h-64 w-full bg-cream/70 overflow-hidden">
-                    <img
+                  <div className="relative h-56 sm:h-64 w-full bg-cream/70 overflow-hidden">
+                    <Image
                       src={gift.image}
                       alt={gift.name}
-                      className="h-full w-full object-cover object-center"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover object-center"
                     />
                   </div>
 

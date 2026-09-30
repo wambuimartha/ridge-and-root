@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { ArrowDown, Mail } from 'lucide-react'
 import { getMailtoUrl } from '@/lib/email-links'
 
@@ -13,12 +14,15 @@ export function WholesaleHero() {
   }
 
   return (
-    <section className="relative">
+    <section className="relative h-[58vh] sm:h-[68vh] min-h-[440px] sm:min-h-[520px] w-full overflow-hidden">
       {/* Background Image */}
-      <img
+      <Image
         src="/images/wholesale_private_label_section.png"
-        alt="Ridge &amp; Root retail pouch, private-label pack, foodservice bulk bag and macadamia kernels"
-        className="h-[58vh] sm:h-[68vh] min-h-[440px] sm:min-h-[520px] w-full object-cover object-[center_35%] sm:object-[75%_center] md:object-[80%_center]"
+        alt="Ridge & Root retail pouch, private-label pack, foodservice bulk bag and macadamia kernels"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-[center_35%] sm:object-[75%_center] md:object-[80%_center]"
       />
 
       {/* Dark gradient overlay behind text for crisp legibility and showing products on the right */}

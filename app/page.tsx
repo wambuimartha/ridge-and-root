@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Header } from '@/components/site/header'
 import { Footer } from '@/components/site/footer'
 import { Newsletter } from '@/components/site/newsletter'
@@ -66,11 +67,14 @@ export default function HomePage() {
 
       {/* 1. Hero */}
 
-      <section className="relative">
-        <img
+      <section className="relative h-[55vh] sm:h-[70vh] min-h-[360px] sm:min-h-[460px] w-full overflow-hidden">
+        <Image
           src="/images/hero_flatlay.png"
-          alt="Ridge &amp; Root macadamia pouches arranged with nuts, coconut and spices"
-          className="h-[55vh] sm:h-[70vh] min-h-[360px] sm:min-h-[460px] w-full object-cover object-top sm:object-center"
+          alt="Ridge & Root macadamia pouches arranged with nuts, coconut and spices"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top sm:object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
         <div className="absolute inset-0 flex items-center">
@@ -105,11 +109,13 @@ export default function HomePage() {
       />
 
       {/* 4. Lifestyle full-width banner */}
-      <section className="relative w-full overflow-hidden">
-        <img
+      <section className="relative w-full overflow-hidden h-[420px] sm:h-[500px] md:h-[560px]">
+        <Image
           src="/images/lifestyle_tote_bag.png"
           alt="A hand placing a Warm Chili macadamia pouch into a tote bag"
-          className="h-[420px] sm:h-[500px] md:h-[560px] w-full object-cover object-[center_35%] sm:object-[80%_center] md:object-center"
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_35%] sm:object-[80%_center] md:object-center"
         />
         {/* Dark gradient overlay behind text for crisp legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/65 to-black/50 sm:bg-gradient-to-r sm:from-black/85 sm:via-black/50 sm:to-transparent" />
@@ -141,11 +147,13 @@ export default function HomePage() {
       <section className="bg-cream">
         <div className="mx-auto grid max-w-7xl grid-cols-1 md:grid-cols-2">
           {/* LEFT — product photo, no text overlay */}
-          <div className="relative overflow-hidden">
-            <img
+          <div className="relative overflow-hidden min-h-[280px] sm:min-h-[360px] md:min-h-[480px]">
+            <Image
               src="/images/wholesale_private_label_section.png"
-              alt="Ridge &amp; Root macadamia retail pouch, private-label custom pouch, foodservice bulk bag, and branded carton with a bowl of kernels"
-              className="h-[280px] sm:h-[360px] w-full object-cover object-center md:h-full md:min-h-[480px]"
+              alt="Ridge & Root macadamia retail pouch, private-label custom pouch, foodservice bulk bag, and branded carton with a bowl of kernels"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-center"
             />
           </div>
 
@@ -184,14 +192,7 @@ export default function HomePage() {
       {/* 6. Three value props */}
       <ValueProps />
 
-      {/* 7. Full-width farm photo
-      <img
-        src="/images/farm_photo_wide.png"
-        alt="A macadamia orchard in the Kenyan highlands with a bowl of kernels"
-        className="h-[340px] w-full object-cover object-top sm:object-center md:h-[460px]"
-      /> */}
-
-      {/* 8. Wellness */}
+      {/* 7. Wellness */}
       <Wellness />
 
       {/* 9. Newsletter */}
