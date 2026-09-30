@@ -134,6 +134,7 @@ export function ProductDetail({
                 src={gallery[mainImg].src || '/placeholder.svg'}
                 alt={gallery[mainImg].alt}
                 fill
+                priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={`transition-transform duration-200 ease-in-out ${
                   mainImg === 0 || mainImg === 1
