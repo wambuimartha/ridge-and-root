@@ -13,7 +13,6 @@ const baskerville = Libre_Baskerville({
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
   variable: '--font-dm-sans',
   display: 'swap',
 })
@@ -79,11 +78,12 @@ export default function RootLayout({
       lang="en"
       className={`light ${baskerville.variable} ${dmSans.variable}`}
       style={{ colorScheme: 'light' }}
+      suppressHydrationWarning
     >
       <head>
         <meta name="color-scheme" content="light" />
       </head>
-      <body className="bg-cream font-sans text-ink antialiased">
+      <body className="bg-cream font-sans text-ink antialiased" suppressHydrationWarning>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

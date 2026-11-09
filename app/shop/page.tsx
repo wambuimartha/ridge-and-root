@@ -4,11 +4,17 @@ import { Footer } from '@/components/site/footer'
 import { WaysToEnjoy } from '@/components/site/ways-to-enjoy'
 import { GoldRibbon } from '@/components/site/gold-ribbon'
 import { ShopGrid } from '@/components/shop/shop-grid'
+import { ExportNotice } from '@/components/site/export-notice'
 
 import { Download } from 'lucide-react'
 import type { Metadata } from 'next'
 import { getServerCurrency } from '@/lib/currency-server'
 import { getCatalogueForCurrency } from '@/lib/catalogue'
+import { isRestricted } from '@/lib/geo'
+
+// Force per-request rendering so the country cookie is read fresh on every visit.
+// This prevents Vercel from serving a cached KE-restricted page to a US visitor.
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Shop All Flavors',
@@ -35,7 +41,10 @@ export const metadata: Metadata = {
 export default async function ShopPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-  const currency = await getServerCurrency(props.searchParams)
+  const [currency, restricted] = await Promise.all([
+    getServerCurrency(props.searchParams),
+    isRestricted(),
+  ])
   const catalogue = getCatalogueForCurrency(currency)
 
   return (
@@ -61,16 +70,20 @@ export default async function ShopPage(props: {
                 <br />
                 Every Moment
               </h1>
-              {/* Download Catalogue — automatically serves KSH or USD catalogue based on visitor location */}
+              {/* Download Catalogue — hidden for restricted (KE) visitors */}
               <div className="mt-6 sm:mt-8">
-                <a
-                  href={catalogue.url}
-                  download={catalogue.filename}
-                  className="inline-flex items-center gap-2 rounded-full bg-gold px-6 sm:px-8 py-3 sm:py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-cream shadow-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md"
-                >
-                  <Download className="h-4 w-4 shrink-0" />
-                  Download Catalogue
-                </a>
+                {restricted ? (
+                  <ExportNotice />
+                ) : (
+                  <a
+                    href={catalogue.url}
+                    download={catalogue.filename}
+                    className="inline-flex items-center gap-2 rounded-full bg-gold px-6 sm:px-8 py-3 sm:py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-cream shadow-sm transition-all duration-200 ease-in-out hover:-translate-y-0.5 hover:opacity-90 hover:shadow-md"
+                  >
+                    <Download className="h-4 w-4 shrink-0" />
+                    Download Catalogue
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -82,7 +95,7 @@ export default async function ShopPage(props: {
 
 
       {/* Filters + grid */}
-      <ShopGrid currency={currency} />
+      <ShopGrid currency={currency} restricted={restricted} />
 
       {/* Gold Ribbon divider */}
       <GoldRibbon />

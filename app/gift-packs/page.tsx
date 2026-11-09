@@ -5,8 +5,13 @@ import { Footer } from '@/components/site/footer'
 import { Newsletter } from '@/components/site/newsletter'
 import { WhatsAppButton } from '@/components/site/buttons'
 import { TealBand } from '@/components/site/teal-band'
+import { ExportNotice } from '@/components/site/export-notice'
 import { buildWhatsAppEnquiry } from '@/lib/products'
 import { getServerCurrency } from '@/lib/currency-server'
+import { isRestricted } from '@/lib/geo'
+
+// Dynamic rendering per request so restricted visitors never see cached unrestricted pages
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Gift Packs & Collections — Ridge & Root',
@@ -50,7 +55,10 @@ const GIFT_SETS = [
 ]
 
 export default async function GiftPacksPage() {
-  const currency = await getServerCurrency()
+  const [currency, restricted] = await Promise.all([
+    getServerCurrency(),
+    isRestricted(),
+  ])
 
   return (
     <main>
@@ -62,7 +70,6 @@ export default async function GiftPacksPage() {
         heading="Gift Packs & Collections"
         description="Celebrate meaningful moments with the purest single-origin Kenyan macadamias."
       />
-
 
       <section className="bg-cream py-12 sm:py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -120,31 +127,37 @@ export default async function GiftPacksPage() {
                       {gift.name}
                     </h2>
 
-                    {/* Price row */}
-                    <div className="mt-2 flex flex-wrap items-baseline gap-2">
-                      <p className={`font-serif text-lg font-semibold ${isCorporate ? 'text-gold' : 'text-ink'}`}>
-                        {displayPrice}
-                      </p>
-                      {displayStandard && (
-                        <span className="font-sans text-xs text-ink/40 line-through">
-                          {displayStandard}
-                        </span>
-                      )}
-                      {savingsBadge && (
-                        <span className="rounded-full bg-rust/10 border border-rust/30 px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-rust">
-                          {savingsBadge}
-                        </span>
-                      )}
-                    </div>
+                    {/* Price row — only rendered for unrestricted visitors */}
+                    {!restricted && (
+                      <div className="mt-2 flex flex-wrap items-baseline gap-2">
+                        <p className={`font-serif text-lg font-semibold ${isCorporate ? 'text-gold' : 'text-ink'}`}>
+                          {displayPrice}
+                        </p>
+                        {displayStandard && (
+                          <span className="font-sans text-xs text-ink/40 line-through">
+                            {displayStandard}
+                          </span>
+                        )}
+                        {savingsBadge && (
+                          <span className="rounded-full bg-rust/10 border border-rust/30 px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-rust">
+                            {savingsBadge}
+                          </span>
+                        )}
+                      </div>
+                    )}
 
                     <p className="mt-3 flex-1 font-sans text-sm leading-relaxed text-ink/70">
                       {gift.description}
                     </p>
 
                     <div className="mt-6 w-full">
-                      <WhatsAppButton href={waUrl} size="sm">
-                        {isCorporate ? 'Request a Quote' : 'Order on WhatsApp'}
-                      </WhatsAppButton>
+                      {restricted ? (
+                        <ExportNotice />
+                      ) : (
+                        <WhatsAppButton href={waUrl} size="sm">
+                          {isCorporate ? 'Request a Quote' : 'Order on WhatsApp'}
+                        </WhatsAppButton>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -159,5 +172,3 @@ export default async function GiftPacksPage() {
     </main>
   )
 }
-
-

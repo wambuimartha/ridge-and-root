@@ -12,13 +12,13 @@ export function Newsletter() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     setStatus('sending')
-
+// rootsridge08@gmail.com
     const serviceId =
-      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_wt1kc84'
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_ip6u3f3'
     const templateId =
-      process.env.NEXT_PUBLIC_EMAILJS_NEWSLETTER_TEMPLATE_ID || 'template_owxoiek'
+      process.env.NEXT_PUBLIC_EMAILJS_NEWSLETTER_TEMPLATE_ID || 'template_roiw28h'
     const publicKey =
-      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '460L12eECwlpwG3rK'
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '6wBs6wkCT9uD0fMd8'
 
     // TEMPORARY DEBUG LOG — remove once the 404 is resolved
     console.log('[EmailJS debug]', { serviceId, templateId, publicKey })

@@ -5,6 +5,10 @@ import { Footer } from '@/components/site/footer'
 import { ProductDetail } from '@/components/shop/product-detail'
 import { products, getProduct } from '@/lib/products'
 import { getServerCurrency } from '@/lib/currency-server'
+import { isRestricted } from '@/lib/geo'
+
+// Dynamic rendering per request so restricted visitors never see cached unrestricted pages
+export const dynamic = 'force-dynamic'
 
 export function generateStaticParams() {
   return products.map((p) => ({ flavor: p.slug }))
@@ -69,9 +73,13 @@ export default async function ProductPage({
     notFound()
   }
 
-  const currency = await getServerCurrency(searchParams)
+  const [currency, restricted] = await Promise.all([
+    getServerCurrency(searchParams),
+    isRestricted(),
+  ])
 
-  const productJsonLd = {
+  // Structured Data: when visitor is restricted, omit offers (price and availability)
+  const productJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
@@ -84,7 +92,10 @@ export default async function ProductPage({
       '@type': 'Brand',
       name: 'Ridge & Root',
     },
-    offers: {
+  }
+
+  if (!restricted) {
+    productJsonLd.offers = {
       '@type': 'Offer',
       price: product.price.replace(/[^0-9.]/g, ''),
       priceCurrency: 'USD',
@@ -94,18 +105,18 @@ export default async function ProductPage({
         '@type': 'Organization',
         name: 'Ridge & Root',
       },
-    },
-    aggregateRating:
-      product.reviews && product.reviews.length > 0
-        ? {
-            '@type': 'AggregateRating',
-            ratingValue: (
-              product.reviews.reduce((sum, r) => sum + r.rating, 0) /
-              product.reviews.length
-            ).toFixed(1),
-            reviewCount: product.reviews.length,
-          }
-        : undefined,
+    }
+  }
+
+  if (product.reviews && product.reviews.length > 0) {
+    productJsonLd.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: (
+        product.reviews.reduce((sum, r) => sum + r.rating, 0) /
+        product.reviews.length
+      ).toFixed(1),
+      reviewCount: product.reviews.length,
+    }
   }
 
   return (
@@ -115,7 +126,7 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
       <Header />
-      <ProductDetail product={product} currency={currency} />
+      <ProductDetail product={product} currency={currency} restricted={restricted} />
       <Footer />
     </main>
   )

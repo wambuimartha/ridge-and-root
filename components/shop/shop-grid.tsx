@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import { shopCards } from '@/lib/products'
 import { formatCurrencyPrice, type Currency } from '@/lib/currency'
+import { ExportNotice } from '@/components/site/export-notice'
 
 const SIZES = ['6 oz', '2 oz']
 
@@ -120,7 +121,14 @@ function FilterPanel({
   )
 }
 
-export function ShopGrid({ currency = 'USD' }: { currency?: Currency }) {
+export function ShopGrid({
+  currency = 'USD',
+  restricted = false,
+}: {
+  currency?: Currency
+  /** When true the visitor is in a restricted territory — prices and order buttons are hidden. */
+  restricted?: boolean
+}) {
   const [sizes, setSizes] = useState<string[]>([])
   const [flavours, setFlavours] = useState<string[]>([])
   const [page, setPage] = useState(1)
@@ -281,12 +289,14 @@ export function ShopGrid({ currency = 'USD' }: { currency?: Currency }) {
                   {formatSizeLabel(card.size)}
                 </p>
 
-                {/* Price — auto-detected currency */}
-                <div className="mt-2 text-center">
-                  <p className="font-sans text-sm font-semibold text-ink">
-                    {formatCurrencyPrice(currency, card.size, 1, card.product.slug)}
-                  </p>
-                </div>
+                {/* Price — hidden for restricted visitors (not rendered in HTML at all) */}
+                {!restricted && (
+                  <div className="mt-2 text-center">
+                    <p className="font-sans text-sm font-semibold text-ink">
+                      {formatCurrencyPrice(currency, card.size, 1, card.product.slug)}
+                    </p>
+                  </div>
+                )}
 
                 {/* CTA — pushed to bottom with mt-auto */}
                 <div className="mt-auto pt-4 w-full max-w-xs">

@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerCurrency } from '@/lib/currency-server'
 import { getCatalogueForCurrency } from '@/lib/catalogue'
+import { isRestricted } from '@/lib/geo'
 import type { Currency } from '@/lib/currency'
 
 export async function GET(request: NextRequest) {
+  // Geo-gate: restricted (Kenyan) visitors receive a 403.
+  // This protects the /catalogue route in addition to the middleware PDF gate.
+  if (await isRestricted()) {
+    return NextResponse.json(
+      { error: 'Our products are currently available for export orders only at the moment.' },
+      { status: 403 }
+    )
+  }
+
   let currency: Currency | null = null
 
   // 1. Dev-only query override (?currency=usd or ?currency=ksh)

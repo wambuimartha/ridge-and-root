@@ -8,14 +8,14 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Frequently Asked Questions',
   description:
-    'Frequently asked questions about Ridge & Root macadamia nuts, sourcing, allergens, orders, shipping, and wholesale.',
+    'Frequently asked questions about Ridge & Root macadamia nuts, sourcing, allergens, export orders, international shipping, and wholesale.',
   alternates: {
     canonical: '/faq',
   },
   openGraph: {
     title: 'Frequently Asked Questions — Ridge & Root',
     description:
-      'Find answers about Ridge & Root macadamia nuts, sourcing, allergens, orders, shipping, and wholesale.',
+      'Find answers about Ridge & Root macadamia nuts, sourcing, allergens, export orders, international shipping, and wholesale.',
     url: 'https://ridgeandroot.co.ke/faq',
   },
 }
@@ -35,15 +35,19 @@ const FAQS = [
   },
   {
     q: 'Do you offer private-label and wholesale orders?',
-    a: 'We provide private-label packaging services and also supply bulk foodservice cartons of roasted and flavored macadamias, customized to your specifications and packed in 10 kg bags. Our raw macadamia kernels are vacuum-packed in 25 lb aluminum pouches and secondary cartons bearing your preferred markings. We serve retailers, manufacturers, and wholesalers, with an annual processing capacity of 700 MT. Visit our Wholesale page or enquire on WhatsApp (+254182257223).',
+    a: 'We provide private-label packaging services and also supply bulk foodservice cartons of roasted and flavored macadamias, customized to your specifications and packed in 10 kg bags. Our raw macadamia kernels are vacuum-packed in 25 lb aluminum pouches and secondary cartons bearing your preferred markings. We serve international retailers, manufacturers, and wholesalers, with an annual processing capacity of 700 MT. Ridge & Root supplies export orders only and ships internationally only. Visit our Wholesale page or contact our export team.',
   },
   {
     q: 'What is your shipping turnaround time?',
-    a: 'Domestic Kenya orders typically ship within 24–48 hours. International shipments via DHL Express arrive within 3–7 business days depending on customs clearance and by sea shipment time will vary with destination.',
+    a: 'Ridge & Root supplies export orders only and ships internationally only. International air shipments via DHL Express arrive within 3–7 business days depending on customs clearance, and ocean freight transit times vary by destination port.',
   },
   {
-    q: 'What payment methods do you accept?',
-    a: 'Contact indulge@ridgeandroot.co.ke or WhatsApp +254182257223 for inquiries and orders.',
+    q: 'Can individual consumers in Kenya purchase directly?',
+    a: 'Ridge & Root supplies export orders only and ships internationally only. We are an export-registered facility and do not supply individual consumers or provide local retail delivery within Kenya.',
+  },
+  {
+    q: 'What payment and commercial terms do you accept?',
+    a: 'We accept wire transfers (T/T), confirmed Letters of Credit (L/C), and international payments as specified in approved export contracts. Contact wholesale@ridgeandroot.co.ke for proforma invoices and export terms.',
   },
 ]
 
@@ -56,7 +60,7 @@ export default function FAQPage() {
         hasTopRibbon={false}
         eyebrow="Help & Support"
         heading="Frequently Asked Questions"
-        description="Everything you need to know about our Kenyan macadamias, ordering, and delivery."
+        description="Ridge & Root supplies export orders only and ships internationally only."
       />
 
       <section className="bg-cream py-12 sm:py-16 md:py-24">

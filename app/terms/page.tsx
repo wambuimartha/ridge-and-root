@@ -7,13 +7,13 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Terms & Conditions',
   description:
-    'Terms of service, website usage policies, and commercial terms for Ridge & Root products.',
+    'Terms of service, website usage policies, and commercial export terms for Ridge & Root products.',
   alternates: {
     canonical: '/terms',
   },
   openGraph: {
     title: 'Terms & Conditions — Ridge & Root',
-    description: 'Terms of service, website usage policies, and commercial terms for Ridge & Root.',
+    description: 'Terms of service, website usage policies, and commercial export terms for Ridge & Root.',
     url: 'https://ridgeandroot.co.ke/terms',
   },
 }
@@ -27,7 +27,7 @@ export default function TermsPage() {
         hasTopRibbon={false}
         eyebrow="Legal"
         heading="Terms & Conditions"
-        description="Effective Date: September 2026"
+        description="Ridge & Root supplies export orders only and ships internationally only."
       />
 
       <section className="bg-cream py-12 sm:py-16 md:py-24">
@@ -35,26 +35,33 @@ export default function TermsPage() {
           <div>
             <h2 className="font-serif text-lg sm:text-xl text-ink">1. Acceptance of Terms</h2>
             <p className="mt-2">
-              By accessing and using this website (ridgeandroot.co.ke) or placing an inquiry or order, you agree to be bound by these Terms and Conditions and our Privacy Policy.
+              By accessing and using this website (ridgeandroot.co.ke) or submitting an inquiry, you agree to be bound by these Terms and Conditions and our Privacy Policy.
             </p>
           </div>
 
           <div>
-            <h2 className="font-serif text-xl text-ink">2. Product Information &amp; Availability</h2>
+            <h2 className="font-serif text-xl text-ink">2. Export Supply Only</h2>
             <p className="mt-2">
-              We make every effort to display the colors, specifications, and nutritional information of our macadamias accurately. Because macadamia nuts are an agricultural crop, seasonal variations in kernel size and appearance may naturally occur.
+              Ridge &amp; Root supplies export orders only and ships internationally only. As an export-licensed facility under EPZ regulations, Ridge &amp; Root does not sell, distribute, or deliver to individual retail consumers or local accounts within Kenya.
             </p>
           </div>
 
           <div>
-            <h2 className="font-serif text-xl text-ink">3. Pricing &amp; Payment</h2>
+            <h2 className="font-serif text-xl text-ink">3. Product Information &amp; Specifications</h2>
             <p className="mt-2">
-              All prices are listed in USD or KES as indicated and are subject to change without prior notice. Wholesale orders require agreed commercial contracts and credit terms authorized by Exotic EPZ.
+              We make every effort to display the specifications, grades, and nutritional information of our macadamias accurately. Because macadamia nuts are an agricultural crop, natural variations in kernel sizing and color may occur in accordance with commercial style classifications.
             </p>
           </div>
 
           <div>
-            <h2 className="font-serif text-xl text-ink">4. Intellectual Property</h2>
+            <h2 className="font-serif text-xl text-ink">4. Commercial Pricing &amp; Export Contracts</h2>
+            <p className="mt-2">
+              All commercial quotes and pricing are provided for international export accounts only. Orders are formalized through commercial invoices, letters of credit, and export agreements authorized by Exotic EPZ in accordance with applicable export laws.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-serif text-xl text-ink">5. Intellectual Property</h2>
             <p className="mt-2">
               All trademarks, logos, photographs, text, and brand assets displayed on this site are the exclusive property of Ridge &amp; Root and Exotic EPZ. Unauthorized reproduction, modification, or redistribution is strictly prohibited.
             </p>

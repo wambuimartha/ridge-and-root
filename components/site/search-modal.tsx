@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Search, X, ArrowRight } from 'lucide-react'
 import { products, type Product } from '@/lib/products'
 import { formatCurrencyPrice, getClientCurrency, type Currency } from '@/lib/currency'
+import { getClientIsRestricted } from '@/lib/geo-client'
 
 interface SearchModalProps {
   isOpen: boolean
@@ -25,12 +26,14 @@ const QUICK_TAGS = [
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('')
   const [currency, setCurrency] = useState<Currency>('USD')
+  const [restricted, setRestricted] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   // Focus input on open & lock background scroll
   useEffect(() => {
     if (isOpen) {
       setCurrency(getClientCurrency())
+      setRestricted(getClientIsRestricted())
       document.body.style.overflow = 'hidden'
       setTimeout(() => inputRef.current?.focus(), 50)
     } else {
@@ -174,9 +177,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="font-serif text-xs sm:text-sm font-semibold text-ink whitespace-nowrap">
-                      {formatCurrencyPrice(currency, '6 oz', 1, item.slug)}
-                    </span>
+                    {/* Price — hidden for restricted visitors */}
+                    {!restricted && (
+                      <span className="font-serif text-xs sm:text-sm font-semibold text-ink whitespace-nowrap">
+                        {formatCurrencyPrice(currency, '6 oz', 1, item.slug)}
+                      </span>
+                    )}
                     <span className="hidden rounded-full border border-gold/60 p-1 text-gold transition-colors group-hover:bg-gold group-hover:text-cream sm:flex">
                       <ArrowRight className="h-3.5 w-3.5" />
                     </span>

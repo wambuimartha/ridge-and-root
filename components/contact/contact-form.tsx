@@ -3,18 +3,21 @@
 import { useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import { CheckCircle2, AlertCircle } from 'lucide-react'
+import { ExportNotice } from '@/components/site/export-notice'
+import { getClientIsRestricted } from '@/lib/geo-client'
 
-type Status = 'idle' | 'sending' | 'success' | 'error'
+type Status = 'idle' | 'sending' | 'success' | 'error' | 'restricted'
 
 const inputClass =
   'w-full rounded-xl border border-ink/15 bg-cream/80 px-4 py-3.5 font-sans text-sm text-ink placeholder:text-ink/35 shadow-[0_1px_3px_rgba(43,33,24,0.04)] transition-all duration-200 focus:border-gold focus:bg-cream focus:shadow-[0_2px_8px_rgba(140,120,83,0.18)] focus:ring-1 focus:ring-gold focus:outline-none'
 
-// EmailJS config — hardcoded (public key is safe to expose client-side)
-const EMAILJS_SERVICE_ID = 'service_i4wpwmo'
-const EMAILJS_TEMPLATE_ID = 'template_p635ow1'
-const EMAILJS_PUBLIC_KEY = 'jGWNqdHNGTvbt_YTO'
+// EmailJS config — hardcoded (public key is safe to expose client-side) 
+//ridgeandrootindulge@gmail.com
+const EMAILJS_SERVICE_ID = 'service_8eqybhe'
+const EMAILJS_TEMPLATE_ID = 'template_dr27pc6'
+const EMAILJS_PUBLIC_KEY = '604JlSJhYSSwUWTp7'
 
-export function ContactForm() {
+export function ContactForm({ restricted = false }: { restricted?: boolean }) {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState<Status>('idle')
 
@@ -24,6 +27,13 @@ export function ContactForm() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+
+    // Safety net: block submission before EmailJS is called if visitor is in Kenya
+    if (restricted || getClientIsRestricted()) {
+      setStatus('restricted')
+      return
+    }
+
     setStatus('sending')
 
     try {
@@ -39,6 +49,14 @@ export function ContactForm() {
       console.error('EmailJS contact form failed:', err)
       setStatus('error')
     }
+  }
+
+  if (restricted || status === 'restricted') {
+    return (
+      <div className="py-2">
+        <ExportNotice />
+      </div>
+    )
   }
 
   return (
@@ -75,7 +93,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="inline-flex items-center justify-center rounded-full bg-gold px-9 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-cream shadow-sm transition-all hover:bg-gold-light hover:shadow-md disabled:opacity-60"
+          className="inline-flex items-center justify-center rounded-full bg-gold px-9 py-3.5 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-cream shadow-sm transition-all hover:bg-gold-light hover:shadow-md disabled:opacity-60 cursor-pointer"
         >
           {status === 'sending' ? 'Sending…' : 'Send Message'}
         </button>

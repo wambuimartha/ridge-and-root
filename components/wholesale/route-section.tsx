@@ -320,7 +320,7 @@ export function RouteSection() {
               Need custom volume pricing or shipping estimates?
             </h4>
             <p className="font-sans text-sm sm:text-base text-ink/75">
-              Submit your required volumes, target ports (CIF/FOB), or timeline, and our wholesale team will prepare an itemized quote.
+              Submit your required volumes, target ports (CIF/FOB), or timeline, and our team will prepare an itemized quote.
             </p>
           </div>
 

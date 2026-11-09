@@ -7,6 +7,10 @@ import { CapabilityGallery } from '@/components/wholesale/capability-gallery'
 import { RouteSection } from '@/components/wholesale/route-section'
 import { PackagingSpec } from '@/components/wholesale/packaging-spec'
 import { EnquiryForm } from '@/components/wholesale/wholesale-enquiry-form'
+import { isRestricted } from '@/lib/geo'
+
+// Dynamic rendering per request so restricted visitors never see cached unrestricted pages
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Wholesale & Business Solutions — Ridge & Root',
@@ -38,7 +42,9 @@ export const metadata: Metadata = {
   },
 }
 
-export default function WholesalePage() {
+export default async function WholesalePage() {
+  const restricted = await isRestricted()
+
   return (
     <main className="min-h-screen bg-cream">
       {/* 1. Header */}
@@ -69,7 +75,7 @@ export default function WholesalePage() {
       <GoldRibbon />
 
       {/* 6. Wholesale Enquiry Form */}
-      <EnquiryForm />
+      <EnquiryForm restricted={restricted} />
 
       {/* 7. Footer */}
       <Footer />

@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Star, Minus, Plus } from 'lucide-react'
 import { products, buildWhatsAppEnquiry, MULTIPACKS, PREMIUM_KSH_SLUGS, type Product } from '@/lib/products'
 import { WhatsAppButton } from '@/components/site/buttons'
 import { formatCurrencyPrice, type Currency } from '@/lib/currency'
+import { ExportNotice } from '@/components/site/export-notice'
 
 export interface ProductSizeOption {
   label: string
@@ -47,9 +48,11 @@ function toteImageForSlug(slug: string): string {
 export function ProductDetail({
   product,
   currency = 'USD',
+  restricted = false,
 }: {
   product: Product
   currency?: Currency
+  restricted?: boolean
 }) {
   const sizeOptions = getSizeOptionsForProduct(product.slug)
   const gallery = [
@@ -212,14 +215,16 @@ export function ProductDetail({
               <span className="font-sans text-xs text-ink/60">(12 reviews)</span>
             </div>
 
-            {/* Price — updates with selected size and quantity live */}
-            <div className="mt-5">
-              <div className="flex flex-wrap items-baseline gap-3">
-                <p className="font-serif text-2xl sm:text-3xl text-ink font-semibold">
-                  {displayPrice}
-                </p>
+            {/* Price — hidden for restricted visitors */}
+            {!restricted && (
+              <div className="mt-5">
+                <div className="flex flex-wrap items-baseline gap-3">
+                  <p className="font-serif text-2xl sm:text-3xl text-ink font-semibold">
+                    {displayPrice}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Size selector */}
             <div className="mt-6 sm:mt-7">
@@ -241,9 +246,11 @@ export function ProductDetail({
                     <span className="font-sans text-xs font-bold text-ink">
                       {opt.label}
                     </span>
-                    <span className="mt-1 font-sans text-xs font-semibold text-gold">
-                      {formatPrice(opt.key)}
-                    </span>
+                    {!restricted && (
+                      <span className="mt-1 font-sans text-xs font-semibold text-gold">
+                        {formatPrice(opt.key)}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -273,35 +280,43 @@ export function ProductDetail({
               </div>
             </div>
 
-            <p className="mt-5 font-sans text-xs text-ink/60">
-              Free shipping on orders over $75
-            </p>
+            {!restricted && (
+              <p className="mt-5 font-sans text-xs text-ink/60">
+                Free shipping on orders over $75
+              </p>
+            )}
 
-            {/* Quantity + CTA */}
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <div className="flex items-center border border-ink/25 rounded-md overflow-hidden bg-cream/40">
-                <button
-                  type="button"
-                  aria-label="Decrease quantity"
-                  onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="px-3 py-3 text-ink hover:text-gold transition-colors"
-                >
-                  <Minus className="h-4 w-4" strokeWidth={1.5} />
-                </button>
-                <span className="w-10 text-center font-sans text-sm text-ink">{qty}</span>
-                <button
-                  type="button"
-                  aria-label="Increase quantity"
-                  onClick={() => setQty((q) => q + 1)}
-                  className="px-3 py-3 text-ink hover:text-gold transition-colors"
-                >
-                  <Plus className="h-4 w-4" strokeWidth={1.5} />
-                </button>
+            {/* Quantity + CTA OR Export Notice */}
+            {restricted ? (
+              <div className="mt-6">
+                <ExportNotice />
               </div>
-              <WhatsAppButton href={enquiryUrl}>
-                Enquire on WhatsApp
-              </WhatsAppButton>
-            </div>
+            ) : (
+              <div className="mt-6 flex flex-wrap items-center gap-4">
+                <div className="flex items-center border border-ink/25 rounded-md overflow-hidden bg-cream/40">
+                  <button
+                    type="button"
+                    aria-label="Decrease quantity"
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                    className="px-3 py-3 text-ink hover:text-gold transition-colors"
+                  >
+                    <Minus className="h-4 w-4" strokeWidth={1.5} />
+                  </button>
+                  <span className="w-10 text-center font-sans text-sm text-ink">{qty}</span>
+                  <button
+                    type="button"
+                    aria-label="Increase quantity"
+                    onClick={() => setQty((q) => q + 1)}
+                    className="px-3 py-3 text-ink hover:text-gold transition-colors"
+                  >
+                    <Plus className="h-4 w-4" strokeWidth={1.5} />
+                  </button>
+                </div>
+                <WhatsAppButton href={enquiryUrl}>
+                  Enquire on WhatsApp
+                </WhatsAppButton>
+              </div>
+            )}
           </div>
         </div>
 
@@ -581,9 +596,11 @@ export function ProductDetail({
                       <div className="p-5 sm:p-6">
                         <div className="flex flex-wrap items-start justify-between gap-2">
                           <div>
-                            <span className="rounded-full bg-rust/10 border border-rust/30 px-2.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-rust">
-                              {savingsDisplay}
-                            </span>
+                            {!restricted && (
+                              <span className="rounded-full bg-rust/10 border border-rust/30 px-2.5 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wider text-rust">
+                                {savingsDisplay}
+                              </span>
+                            )}
                             <h3 className="mt-2 font-serif text-lg sm:text-xl text-ink">
                               {bundle.name}
                             </h3>
@@ -597,14 +614,20 @@ export function ProductDetail({
                         </p>
 
                         <div className="mt-4 pt-4 border-t border-gold/20 flex flex-wrap items-center justify-between gap-4">
-                          <div className="flex items-baseline gap-2.5">
-                            <span className="font-serif text-2xl font-bold text-ink">{salePrice}</span>
-                            <span className="font-sans text-sm text-ink/40 line-through">{wasPrice}</span>
-                            <span className="rounded-full bg-rust/10 border border-rust/25 px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wide text-rust">
-                              {savingsDisplay}
-                            </span>
-                          </div>
-                          <WhatsAppButton href={waUrl}>Order this Bundle</WhatsAppButton>
+                          {restricted ? (
+                            <ExportNotice />
+                          ) : (
+                            <>
+                              <div className="flex items-baseline gap-2.5">
+                                <span className="font-serif text-2xl font-bold text-ink">{salePrice}</span>
+                                <span className="font-sans text-sm text-ink/40 line-through">{wasPrice}</span>
+                                <span className="rounded-full bg-rust/10 border border-rust/25 px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-wide text-rust">
+                                  {savingsDisplay}
+                                </span>
+                              </div>
+                              <WhatsAppButton href={waUrl}>Order this Bundle</WhatsAppButton>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -624,23 +647,29 @@ export function ProductDetail({
                   </div>
                   <div className="p-5 sm:p-6">
                     <h3 className="font-serif text-lg sm:text-xl text-ink">Custom Corporate Gifting</h3>
-                    <p className="mt-0.5 font-serif text-base font-semibold text-gold">Custom Quote</p>
+                    {!restricted && (
+                      <p className="mt-0.5 font-serif text-base font-semibold text-gold">Custom Quote</p>
+                    )}
                     <p className="mt-2 font-sans text-sm leading-relaxed text-ink/80">
                       Bespoke branded ribboning, customized gift cards, and worldwide white-glove direct shipping to clients and executive teams.
                     </p>
                     <div className="mt-4 pt-4 border-t border-gold/20">
-                      <WhatsAppButton
-                        href={buildWhatsAppEnquiry({
-                          productName: 'Custom Corporate Gifting',
-                          slug: 'gift-packs',
-                          formattedPrice: 'Custom Quote',
-                          productUrl: typeof window !== 'undefined'
-                            ? `${window.location.origin}/gift-packs`
-                            : 'https://ridgeandroot.co.ke/gift-packs',
-                        })}
-                      >
-                        Request a Quote
-                      </WhatsAppButton>
+                      {restricted ? (
+                        <ExportNotice />
+                      ) : (
+                        <WhatsAppButton
+                          href={buildWhatsAppEnquiry({
+                            productName: 'Custom Corporate Gifting',
+                            slug: 'gift-packs',
+                            formattedPrice: 'Custom Quote',
+                            productUrl: typeof window !== 'undefined'
+                              ? `${window.location.origin}/gift-packs`
+                              : 'https://ridgeandroot.co.ke/gift-packs',
+                          })}
+                        >
+                          Request a Quote
+                        </WhatsAppButton>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -681,9 +710,11 @@ export function ProductDetail({
                   <p className="mt-1 font-sans text-[10px] font-medium uppercase tracking-[0.2em] text-ink/50">
                     Dry Roasted Macadamia Nuts
                   </p>
-                  <p className="mt-1.5 font-sans text-xs font-semibold text-ink/70">
-                    {formatPrice('6 oz')}
-                  </p>
+                  {!restricted && (
+                    <p className="mt-1.5 font-sans text-xs font-semibold text-ink/70">
+                      {formatPrice('6 oz')}
+                    </p>
+                  )}
                 </Link>
               ))}
             </div>

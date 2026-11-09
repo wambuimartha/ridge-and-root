@@ -5,9 +5,13 @@ import { Newsletter } from '@/components/site/newsletter'
 import { PillLink } from '@/components/site/buttons'
 import { GoldRibbon } from '@/components/site/gold-ribbon'
 import { ContactForm } from '@/components/contact/contact-form'
-import { Mail, Phone, MapPin, Building2, Users, Clock } from 'lucide-react'
+import { Mail, Phone, MapPin, Building2, Users } from 'lucide-react'
 import { getMailtoUrl } from '@/lib/email-links'
+import { isRestricted } from '@/lib/geo'
 import type { Metadata } from 'next'
+
+// Dynamic rendering per request so restricted visitors never see cached unrestricted pages
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: "Let's Grow Together — Contact Us",
@@ -57,7 +61,9 @@ const INFO_ITEMS = [
   },
 ]
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const restricted = await isRestricted()
+
   return (
     <main>
       <Header />
@@ -108,7 +114,7 @@ export default function ContactPage() {
                   hear from you.
                 </h2>
                 <p className="mt-4 font-sans text-sm leading-relaxed text-ink/75 sm:text-base">
-                  Questions, retail orders, private-label collaborations, or farm partnership ideas? Send us a message and our team in Nairobi will respond promptly.
+                  Questions, export enquiries, private-label collaborations, or farm partnership ideas? Send us a message and our team in Nairobi will respond promptly.
                 </p>
               </div>
 
@@ -116,7 +122,7 @@ export default function ContactPage() {
                 <h3 className="mb-6 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-ink">
                   Send Us a Message
                 </h3>
-                <ContactForm />
+                <ContactForm restricted={restricted} />
               </div>
             </div>
 
